@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Varying Rectangle 2</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 style="text-align: center;">Varying Rectangle With Interpolate</h1>
+    <h3 style="text-align: center;">Prana Gusriana (13519195)</h3>
+    <div id="uiContainer">
+        <div id="ui">
+          <div id="x"></div>
+          <div id="y"></div>
+          <div id="angle"></div>
+          <div id="scaleX"></div>
+          <div id="scaleY"></div>
+        </div>
+    </div>
+    <canvas id="canvas"></canvas>
+    <!-- vertex shader -->
+    <script  id="vertex-shader-2d" type="x-shader/x-vertex">
+        attribute vec2 a_position;
+        attribute vec4 a_color;
+        
+        uniform mat3 u_matrix;
+        
+        varying vec4 v_color;
+        
+        void main() {
+        // Multiply the position by the matrix.
+        gl_Position = vec4((u_matrix * vec3(a_position, 1)).xy, 0, 1);
+        
+        // Convert from clipspace to colorspace.
+        // Clipspace goes -1.0 to +1.0
+        // Colorspace goes from 0.0 to 1.0
+        v_color = a_color;
+        }
+    </script>
+    <!-- fragment shader -->
+    <script  id="fragment-shader-2d" type="x-shader/x-fragment">
+        precision mediump float;
+        
+        varying vec4 v_color;
+        
+        void main() {
+        gl_FragColor = v_color;
+        }
+    </script>
+    <script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
+    <script src="https://webglfundamentals.org/webgl/resources/webgl-lessons-ui.js"></script>
+    <script src="https://webglfundamentals.org/webgl/resources/m3.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
